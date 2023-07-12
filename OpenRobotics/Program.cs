@@ -1,7 +1,12 @@
+using Microsoft.EntityFrameworkCore;
+using OpenRobotics.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<Context>(options => options.UseSqlServer("Data Source=THIGAS\\SQLEXPRESS;Initial Catalog=Openrobotics;Persist Security Info=True;User ID=app_openrobotics;Password=0p3nr0b0t1cs#2023development;TrustServerCertificate=True"));
 
 var app = builder.Build();
 
