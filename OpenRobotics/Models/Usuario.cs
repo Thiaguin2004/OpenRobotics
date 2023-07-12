@@ -1,8 +1,24 @@
-﻿namespace OpenRobotics.Models
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace OpenRobotics.Models
 {
     public class Usuario
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Required]
         public int Id { get; set; }
-        public string? Nome { get; set; }
+        [Required]
+        public string Nome { get; set; }
+        [Required]
+        public string Endereco { get; set; }
+        [Required]
+        public string? Celular { get; set; }
+        [Required]
+        public int CPF { get; set; }
+        [Required]
+        public int IdPerfil { get; set; }
+        public Perfil Perfil { get; set; }
     }
 }

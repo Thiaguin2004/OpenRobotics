@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OpenRobotics.Models;
 
@@ -10,9 +11,11 @@ using OpenRobotics.Models;
 namespace OpenRobotics.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20230712203006_fourth")]
+    partial class fourth
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -23,17 +26,17 @@ namespace OpenRobotics.Migrations
 
             modelBuilder.Entity("OpenRobotics.Models.Perfil", b =>
                 {
-                    b.Property<int>("IdPerfil")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdPerfil"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Descricao")
+                    b.Property<string>("Tipo")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("IdPerfil");
+                    b.HasKey("Id");
 
                     b.ToTable("Perfil");
                 });
@@ -50,7 +53,6 @@ namespace OpenRobotics.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Celular")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Endereco")
@@ -64,12 +66,12 @@ namespace OpenRobotics.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PerfilIdPerfil")
+                    b.Property<int>("PerfilId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PerfilIdPerfil");
+                    b.HasIndex("PerfilId");
 
                     b.ToTable("Usuario");
                 });
@@ -78,7 +80,7 @@ namespace OpenRobotics.Migrations
                 {
                     b.HasOne("OpenRobotics.Models.Perfil", "Perfil")
                         .WithMany()
-                        .HasForeignKey("PerfilIdPerfil")
+                        .HasForeignKey("PerfilId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
