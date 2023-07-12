@@ -57,16 +57,19 @@ namespace OpenRobotics.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Nome,Endereco,Celular,CPF,IdPerfil")] Usuario usuario)
         {
-            Perfil teste = new Perfil();
-            teste.Descricao = "Administrador";
-            usuario.Perfil = teste;
-            if (true)
+            var perfilUsuario = await _context.Perfil.FindAsync(usuario.IdPerfil);
+            usuario.Perfil = perfilUsuario;
+            try
             {
                 _context.Add(usuario);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(usuario);
+            catch
+            {
+                return View(usuario);
+
+            }
         }
 
         // GET: Usuarios/Edit/5

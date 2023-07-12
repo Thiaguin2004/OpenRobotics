@@ -10,5 +10,6 @@ namespace OpenRobotics.Models
         }
 
         public DbSet<Usuario> Usuario { get; set; }
+        public DbSet<Perfil> Perfil { get; set; }
     }
 }
