@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using OpenRobotics.Models;
 
 namespace OpenRobotics.Models
 {
