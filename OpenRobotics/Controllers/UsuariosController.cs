@@ -48,6 +48,7 @@ namespace OpenRobotics.Controllers
         // GET: Usuarios/Create
         public IActionResult Create()
         {
+            ViewBag.Perfis = new SelectList(_context.GetPerfis(), "IdPerfil", "Descricao");
             return View();
         }
 

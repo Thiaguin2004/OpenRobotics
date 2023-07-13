@@ -1,14 +1,14 @@
 Opção de filtrar todas as colunas de uma vez (com textbox para busca) 
 Ordenação de colunas 
-Botão de editar em cima do nome 
-Excluir detalhes 
-Deletar vai virar um ícone 
+X Botão de editar em cima do nome 
+X Excluir detalhes 
+X Deletar vai virar um ícone 
 Botão para alterar status desligamento na aba de Usuário 
 Criar seleção por views (para usuários desligados) 
 Formatação para Celular, CPF 
-Dropbox para Perfil 
+X Dropbox para Perfil 
 Paginação para Index, para escolher a quantidade de registros 
 Alternar cores para registros em Index 
-Voltar para lista virar um botão em bootstrap 
-Criar novo vai virar um ícone 
+X Voltar para lista virar um botão em bootstrap 
+X Criar novo vai virar um ícone 
 Tamanhos de textbox

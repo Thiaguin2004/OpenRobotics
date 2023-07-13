@@ -4,7 +4,7 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Criar</h1>
 
 <h4>Usuario</h4>
 <hr />
@@ -34,20 +34,25 @@
             </div>
             <div class="form-group">
                 <label asp-for="Perfil.IdPerfil" class="control-label"></label>
-                <input asp-for="Perfil.IdPerfil" class="form-control" />
+                <select asp-for="Perfil.IdPerfil" class="form-control">
+                    @foreach (var item in ViewBag.Perfis as SelectList)
+                    {
+                        <option value="@item.Value">@item.Text</option>
+                    }
+                </select>
                 <span asp-validation-for="Perfil.IdPerfil" class="text-danger"></span>
             </div>
+            <br />
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Criar" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Voltar para lista</a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

@@ -14,5 +14,9 @@ namespace OpenRobotics.Models
         {
             return Usuario.Include(tp => tp.Perfil).ToList();
         }
+        public List<Perfil> GetPerfis()
+        {
+            return Perfil.ToList();
+        }
     }
 }

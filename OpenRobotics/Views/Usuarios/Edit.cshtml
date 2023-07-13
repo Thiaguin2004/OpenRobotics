@@ -38,15 +38,13 @@
                 <input asp-for="IdPerfil" class="form-control" />
                 <span asp-validation-for="IdPerfil" class="text-danger"></span>
             </div>
+            <br />
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Salvar" class="btn btn-primary" />
+                <a class="btn btn-secondary" asp-action="Index">Voltar para a lista</a>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Voltar para a lista</a>
 </div>
 
 @section Scripts {
