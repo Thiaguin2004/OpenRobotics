@@ -86,6 +86,7 @@ namespace OpenRobotics.Controllers
             {
                 return NotFound();
             }
+            ViewBag.Perfis = new SelectList(_context.GetPerfis(), "IdPerfil", "Descricao");
             return View(usuario);
         }
 

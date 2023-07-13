@@ -12,11 +12,11 @@ namespace OpenRobotics.Models
         //Funções para consultas em banco de dados
         public List<Usuario> GetUsuario()
         {
-            return Usuario.Include(tp => tp.Perfil).ToList();
+            return Usuario.Include(tp => tp.Perfil).OrderBy(r => r.Nome).ToList();
         }
         public List<Perfil> GetPerfis()
         {
-            return Perfil.ToList();
+            return Perfil.OrderByDescending(r => r.IdPerfil).ToList();
         }
     }
 }

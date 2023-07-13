@@ -1,5 +1,5 @@
 Opção de filtrar todas as colunas de uma vez (com textbox para busca) 
-Ordenação de colunas 
+X Ordenação de colunas 
 X Botão de editar em cima do nome 
 X Excluir detalhes 
 X Deletar vai virar um ícone 
@@ -11,4 +11,4 @@ Paginação para Index, para escolher a quantidade de registros
 Alternar cores para registros em Index 
 X Voltar para lista virar um botão em bootstrap 
 X Criar novo vai virar um ícone 
-Tamanhos de textbox
+X Tamanhos de textbox
