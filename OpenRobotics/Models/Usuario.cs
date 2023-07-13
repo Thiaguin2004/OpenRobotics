@@ -18,7 +18,8 @@ namespace OpenRobotics.Models
         [Required]
         public int CPF { get; set; }
         [Required]
+        [ForeignKey(nameof(Perfil))]
         public int IdPerfil { get; set; }
-        public Perfil Perfil { get; set; }
+        public virtual Perfil? Perfil { get; set; }
     }
 }

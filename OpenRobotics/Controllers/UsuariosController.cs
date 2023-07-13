@@ -21,9 +21,10 @@ namespace OpenRobotics.Controllers
         // GET: Usuarios
         public async Task<IActionResult> Index()
         {
-              return _context.Usuario != null ? 
-                          View(await _context.Usuario.ToListAsync()) :
-                          Problem("Entity set 'Context.Usuario'  is null.");
+            //return _context.Usuario != null ? 
+            //            View(await _context.Usuario.ToListAsync()) :
+            //            Problem("Entity set 'Context.Usuario'  is null.");
+            return View(_context.GetUsuario());
         }
 
         // GET: Usuarios/Details/5
@@ -55,9 +56,9 @@ namespace OpenRobotics.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nome,Endereco,Celular,CPF,IdPerfil")] Usuario usuario)
+        public async Task<IActionResult> Create([Bind("Id,Nome,Endereco,Celular,CPF,Perfil")] Usuario usuario)
         {
-            var perfilUsuario = await _context.Perfil.FindAsync(usuario.IdPerfil);
+            var perfilUsuario = await _context.Perfil.FindAsync(usuario.Perfil.IdPerfil);
             usuario.Perfil = perfilUsuario;
             try
             {
@@ -68,7 +69,6 @@ namespace OpenRobotics.Controllers
             catch
             {
                 return View(usuario);
-
             }
         }
 
@@ -100,27 +100,34 @@ namespace OpenRobotics.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            var perfilUsuario = await _context.Perfil.FindAsync(usuario.IdPerfil);
+            usuario.Perfil = perfilUsuario;
+
+            if (perfilUsuario == null)
+            {
+                return View(usuario);
+            }
+            else
             {
                 try
                 {
                     _context.Update(usuario);
                     await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UsuarioExists(usuario.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    return View(usuario);
+                    //if (!UsuarioExists(usuario.Id))
+                    //{
+                    //    return NotFound();
+                    //}
+                    //else
+                    //{
+                    //    throw;
+                    //}
                 }
-                return RedirectToAction(nameof(Index));
             }
-            return View(usuario);
         }
 
         // GET: Usuarios/Delete/5

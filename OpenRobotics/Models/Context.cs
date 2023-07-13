@@ -1,15 +1,19 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using OpenRobotics.Models;
 
 namespace OpenRobotics.Models
 {
     public class Context : DbContext
     {
-        public Context(DbContextOptions<Context> options):base(options)
-        {
-            
-        }
+        public Context(DbContextOptions<Context> options):base(options){}
 
         public DbSet<Usuario> Usuario { get; set; }
         public DbSet<Perfil> Perfil { get; set; }
+
+        //Funções para consultas em banco de dados
+        public List<Usuario> GetUsuario()
+        {
+            return Usuario.Include(tp => tp.Perfil).ToList();
+        }
     }
 }
