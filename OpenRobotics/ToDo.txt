@@ -12,5 +12,5 @@ X Alternar cores para registros em Index
 X Voltar para lista virar um botão em bootstrap 
 X Criar novo vai virar um ícone 
 X Tamanhos de textbox
-Alterar nome da tabela de Usuários para Clientes
-Fazer aparecer em GRID de Clientes apenas Nome e Nome Fantasia
+X Alterar nome da tabela de Usuários para Clientes
+X Fazer aparecer em GRID de Clientes apenas Nome e Nome Fantasia
