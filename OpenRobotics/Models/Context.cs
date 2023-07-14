@@ -14,6 +14,10 @@ namespace OpenRobotics.Models
         {
             return Usuario.Include(tp => tp.Perfil).OrderBy(r => r.Nome).ToList();
         }
+        public Usuario GetUsuario(int id)
+        {
+            return Usuario.Where(r => r.Id == id).Include(r => r.Perfil).FirstOrDefault();
+        }
         public List<Perfil> GetPerfis()
         {
             return Perfil.OrderByDescending(r => r.IdPerfil).ToList();

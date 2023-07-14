@@ -133,15 +133,14 @@ namespace OpenRobotics.Controllers
         }
 
         // GET: Usuarios/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int id)
         {
             if (id == null || _context.Usuario == null)
             {
                 return NotFound();
             }
 
-            var usuario = await _context.Usuario
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var usuario = _context.GetUsuario(id);
             if (usuario == null)
             {
                 return NotFound();
