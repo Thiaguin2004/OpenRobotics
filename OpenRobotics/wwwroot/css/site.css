@@ -16,3 +16,15 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+/*Alternância de cores para cada linha da tabela*/
+table {
+    text-align: center;
+    font-family: Montserrat, Arial, sans-serif;
+    margin: 0 auto;
+    width: 80%;
+}
+
+tr:nth-child(even) {
+    background: lightgray;
+}
