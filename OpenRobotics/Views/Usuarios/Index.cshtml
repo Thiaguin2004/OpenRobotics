@@ -12,13 +12,10 @@
             <div class="col">
                 <a asp-action="Create" class="btn btn-outline-primary">Criar novo usuário</a>
             </div>
-            <div class="col">
-                <input class="form-control" type="text" id="pesquisa" placeholder="Pesquisar" style="width: 50%; float:right">
-            </div>
         </div>
     </div>
 </p>
-<table class="table sortable" id="tabela">
+<table id="example" class="table table-striped">
     <thead>
         <tr>
             <th>
@@ -78,7 +75,18 @@
         }
     </tbody>
 </table>
-<nav>
+@section Scripts{
+    <script>
+        $(document).ready(function(){
+            $('#example').DataTable({
+                "language":{
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
+                }
+            });
+        });
+    </script>
+}
+@*<nav>
     <ul class="pagination">
         @for (int i = 1; i <= ViewBag.TotalPages; i++)
         {
@@ -87,4 +95,4 @@
             </li>
         }
     </ul>
-</nav>
+</nav>*@

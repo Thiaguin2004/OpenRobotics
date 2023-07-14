@@ -19,21 +19,9 @@ namespace OpenRobotics.Controllers
         }
 
         // GET: Usuarios
-        public async Task<IActionResult> Index(int? page)
+        public async Task<IActionResult> Index()
         {
-            //return _context.Usuario != null ? 
-            //            View(await _context.Usuario.ToListAsync()) :
-            //            Problem("Entity set 'Context.Usuario'  is null.");
-            int pageSize = 10;
-            int pageNumber = page ?? 1;
-
-            var items = _context.GetUsuario(); // Substitua "Dados" pelo nome da sua tabela ou coleção de dados
-
-            var paginatedItems = items.Skip((pageNumber - 1) * pageSize).Take(pageSize);
-
-            ViewBag.CurrentPage = pageNumber;
-            ViewBag.TotalPages = Math.Ceiling(items.Count / (double)pageSize);
-            return View(paginatedItems);
+            return View(_context.GetUsuario());
         }
 
         // GET: Usuarios/Details/5
