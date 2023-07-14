@@ -57,9 +57,9 @@ namespace OpenRobotics.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nome,Endereco,Celular,CPF,Perfil")] Usuario usuario)
+        public async Task<IActionResult> Create([Bind("Id,Nome,Endereco,Celular,CPF,IdPerfil")] Usuario usuario)
         {
-            var perfilUsuario = await _context.Perfil.FindAsync(usuario.Perfil.IdPerfil);
+            var perfilUsuario = await _context.Perfil.FindAsync(usuario.IdPerfil);
             usuario.Perfil = perfilUsuario;
             try
             {
@@ -172,6 +172,35 @@ namespace OpenRobotics.Controllers
         private bool UsuarioExists(int id)
         {
           return (_context.Usuario?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AlterarDesligamento(int id)
+        {
+            var usuario = await _context.Usuario.FindAsync(id);
+            if (usuario.Desligado == 1)
+                usuario.Desligado = 0;
+            else
+                usuario.Desligado = 1;
+            try
+            {
+                _context.Update(usuario);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return View(usuario);
+                //if (!UsuarioExists(usuario.Id))
+                //{
+                //    return NotFound();
+                //}
+                //else
+                //{
+                //    throw;
+                //}
+            }
         }
     }
 }

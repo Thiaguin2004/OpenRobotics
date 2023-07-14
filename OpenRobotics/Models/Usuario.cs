@@ -16,7 +16,9 @@ namespace OpenRobotics.Models
         [Required]
         public string? Celular { get; set; }
         [Required]
-        public int CPF { get; set; }
+        public string? CPF { get; set; }
+        [Required]
+        public int Desligado { get;set; }
         [Required]
         [ForeignKey(nameof(Perfil))]
         public int IdPerfil { get; set; }

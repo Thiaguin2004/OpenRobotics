@@ -7,9 +7,18 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create" class="btn btn-outline-primary">Criar novo usuário</a>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <a asp-action="Create" class="btn btn-outline-primary">Criar novo usuário</a>
+            </div>
+            <div class="col">
+                <input class="form-control" type="text" id="pesquisa" placeholder="Pesquisar" style="width: 50%; float:right">
+            </div>
+        </div>
+    </div>
 </p>
-<table class="table sortable">
+<table class="table sortable" id="tabela">
     <thead>
         <tr>
             <th>
@@ -27,6 +36,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Perfil)
             </th>
+            <th>Desligado?</th>
             <th></th>
         </tr>
     </thead>
@@ -50,7 +60,19 @@
                     @Html.DisplayFor(modelItem => item.Perfil.Descricao)
                 </td>
                 <td>
-                    <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.Id"><i class="fa fa-trash"></i></a>
+                    <form method="post" asp-action="AlterarDesligamento">
+                        <input type="hidden" name="id" asp-for="@item.Id" />
+                        @if(item.Desligado == 1)
+                        {
+                            <button type="submit" class="btn btn-danger btn-sm fa-solid fa-power-off"></button>
+                        }else
+                        {
+                            <button type="submit" class="btn btn-success btn-sm fa-solid fa-power-off"></button>
+                        }
+                    </form>
+                </td>
+                <td>
+                    <a asp-action="Delete" class="btn btn-danger btn-sm" asp-route-id="@item.Id"><i class="fa-solid fa-trash"></i></a>
                 </td>
             </tr>
         }
@@ -60,13 +82,13 @@
 <style>
     /*Alternância de cores para cada linha da tabela*/
     table {
-      text-align: center;
-      font-family: Montserrat, Arial, sans-serif;
-      margin: 0 auto;
-      width: 80%;
+        text-align: center;
+        font-family: Montserrat, Arial, sans-serif;
+        margin: 0 auto;
+        width: 80%;
     }
 
     tr:nth-child(even) {
-      background: lightgray;
+        background: lightgray;
     }
 </style>

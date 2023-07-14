@@ -1,11 +1,11 @@
-Opção de filtrar todas as colunas de uma vez (com textbox para busca) 
+X Opção de filtrar todas as colunas de uma vez (com textbox para busca) 
 X Ordenação de colunas 
 X Botão de editar em cima do nome 
 X Excluir detalhes 
 X Deletar vai virar um ícone 
-Botão para alterar status desligamento na aba de Usuário 
+X Botão para alterar status desligamento na aba de Usuário 
 Criar seleção por views (para usuários desligados) 
-Formatação para Celular, CPF 
+X Formatação para Celular, CPF 
 X Dropbox para Perfil 
 Paginação para Index, para escolher a quantidade de registros que irão aparecer
 X Alternar cores para registros em Index 
