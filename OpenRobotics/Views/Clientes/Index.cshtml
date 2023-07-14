@@ -1,0 +1,120 @@
+﻿@model IEnumerable<OpenRobotics.Models.Cliente>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Lista de usuários</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-outline-primary">Criar novo</a>
+</p>
+<table id="example" class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fantasia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TipoPessoa)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CEP)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cidade)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Bairro)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Endereco)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Numero)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Complemento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Celular)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CNPJCPF)
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fantasia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TipoPessoa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CEP)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cidade)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Bairro)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Endereco)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Numero)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Complemento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Celular)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.CNPJCPF)
+            </td>
+            <td>
+                <form method="post" asp-action="AlterarDesligamento">
+                    <input type="hidden" name="id" asp-for="@item.Id" />
+                    @if (item.Desligado == 1)
+                    {
+                        <button type="submit" class="btn btn-danger btn-sm fa-solid fa-power-off"></button>
+                    }
+                    else
+                    {
+                        <button type="submit" class="btn btn-success btn-sm fa-solid fa-power-off"></button>
+                    }
+                </form>
+            </td>
+            <td>
+                <a asp-action="Delete" class="btn btn-danger btn-sm" asp-route-id="@item.Id"><i class="fa-solid fa-trash"></i></a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#example').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
+                }
+            });
+        });
+    </script>
+}

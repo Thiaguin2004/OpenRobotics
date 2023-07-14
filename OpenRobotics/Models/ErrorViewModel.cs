@@ -1,4 +1,4 @@
-namespace OpenRobotics.Models
+﻿namespace OpenRobotics.Models
 {
     public class ErrorViewModel
     {

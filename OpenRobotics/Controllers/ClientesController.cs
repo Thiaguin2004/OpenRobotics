@@ -9,11 +9,11 @@ using OpenRobotics.Models;
 
 namespace OpenRobotics.Controllers
 {
-    public class UsuariosController : Controller
+    public class ClientesController : Controller
     {
         private readonly Context _context;
 
-        public UsuariosController(Context context)
+        public ClientesController(Context context)
         {
             _context = context;
         }
@@ -21,31 +21,32 @@ namespace OpenRobotics.Controllers
         // GET: Usuarios
         public async Task<IActionResult> Index()
         {
-            return View(_context.GetUsuario());
+            return View(_context.GetCliente());
         }
 
         // GET: Usuarios/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || _context.Usuario == null)
-            {
-                return NotFound();
-            }
+        //public async Task<IActionResult> Details(int? id)
+        //{
+        //    if (id == null || _context.Cliente == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var usuario = await _context.Usuario
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (usuario == null)
-            {
-                return NotFound();
-            }
+        //    var cliente = await _context.Cliente
+        //        .Include(u => u.Perfil)
+        //        .FirstOrDefaultAsync(m => m.Id == id);
+        //    if (cliente == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(usuario);
-        }
+        //    return View(cliente);
+        //}
 
         // GET: Usuarios/Create
         public IActionResult Create()
         {
-            ViewBag.Perfis = new SelectList(_context.GetPerfis(), "IdPerfil", "Descricao");
+            //ViewData["IdPerfil"] = new SelectList(_context.Perfil, "IdPerfil", "Descricao");
             return View();
         }
 
@@ -54,37 +55,35 @@ namespace OpenRobotics.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nome,Endereco,Celular,CPF,IdPerfil")] Usuario usuario)
+        public async Task<IActionResult> Create([Bind("Id,Nome,Fantasia,TipoPessoa,CEP,UF,Cidade,Bairro,Endereco,Numero,Complemento,Celular,CPF,Desligado,CNPJCPF")] Cliente cliente)
         {
-            var perfilUsuario = await _context.Perfil.FindAsync(usuario.IdPerfil);
-            usuario.Perfil = perfilUsuario;
             try
             {
-                _context.Add(usuario);
+                _context.Add(cliente);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View(usuario);
+                return View(cliente);
             }
         }
 
         // GET: Usuarios/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Usuario == null)
+            if (id == null || _context.Cliente == null)
             {
                 return NotFound();
             }
 
-            var usuario = await _context.Usuario.FindAsync(id);
-            if (usuario == null)
+            var cliente = await _context.Cliente.FindAsync(id);
+            if (cliente == null)
             {
                 return NotFound();
             }
-            ViewBag.Perfis = new SelectList(_context.GetPerfis(), "IdPerfil", "Descricao");
-            return View(usuario);
+            //ViewBag.Perfis = new SelectList(_context.GetPerfis(), "IdPerfil", "Descricao");
+            return View(cliente);
         }
 
         // POST: Usuarios/Edit/5
@@ -92,31 +91,23 @@ namespace OpenRobotics.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Endereco,Celular,CPF,IdPerfil")] Usuario usuario)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Fantasia,TipoPessoa,CEP,UF,Cidade,Bairro,Endereco,Numero,Complemento,Celular,CPF,Desligado,CNPJCPF")] Cliente cliente)
         {
-            if (id != usuario.Id)
+            if (id != cliente.Id)
             {
                 return NotFound();
-            }
-
-            var perfilUsuario = await _context.Perfil.FindAsync(usuario.IdPerfil);
-            usuario.Perfil = perfilUsuario;
-
-            if (perfilUsuario == null)
-            {
-                return View(usuario);
             }
             else
             {
                 try
                 {
-                    _context.Update(usuario);
+                    _context.Update(cliente);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    return View(usuario);
+                    return View(cliente);
                     //if (!UsuarioExists(usuario.Id))
                     //{
                     //    return NotFound();
@@ -132,18 +123,18 @@ namespace OpenRobotics.Controllers
         // GET: Usuarios/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
-            if (id == null || _context.Usuario == null)
+            if (id == null || _context.Cliente == null)
             {
                 return NotFound();
             }
 
-            var usuario = _context.GetUsuario(id);
-            if (usuario == null)
+            var cliente = _context.GetCliente(id);
+            if (cliente == null)
             {
                 return NotFound();
             }
 
-            return View(usuario);
+            return View(cliente);
         }
 
         // POST: Usuarios/Delete/5
@@ -151,14 +142,14 @@ namespace OpenRobotics.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Usuario == null)
+            if (_context.Cliente == null)
             {
-                return Problem("Entity set 'Context.Usuario'  is null.");
+                return Problem("Entity set 'Context.Cliente'  is null.");
             }
-            var usuario = await _context.Usuario.FindAsync(id);
-            if (usuario != null)
+            var cliente = await _context.Cliente.FindAsync(id);
+            if (cliente != null)
             {
-                _context.Usuario.Remove(usuario);
+                _context.Cliente.Remove(cliente);
             }
             
             await _context.SaveChangesAsync();
@@ -167,35 +158,27 @@ namespace OpenRobotics.Controllers
 
         private bool UsuarioExists(int id)
         {
-          return (_context.Usuario?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.Cliente?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AlterarDesligamento(int id)
         {
-            var usuario = await _context.Usuario.FindAsync(id);
-            if (usuario.Desligado == 1)
-                usuario.Desligado = 0;
+            var cliente = await _context.Cliente.FindAsync(id);
+            if (cliente.Desligado == 1)
+                cliente.Desligado = 0;
             else
-                usuario.Desligado = 1;
+                cliente.Desligado = 1;
             try
             {
-                _context.Update(usuario);
+                _context.Update(cliente);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             catch (DbUpdateConcurrencyException)
             {
-                return View(usuario);
-                //if (!UsuarioExists(usuario.Id))
-                //{
-                //    return NotFound();
-                //}
-                //else
-                //{
-                //    throw;
-                //}
+                return View(cliente);
             }
         }
     }

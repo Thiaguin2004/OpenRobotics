@@ -4,23 +4,18 @@ namespace OpenRobotics.Models
 {
     public class Context : DbContext
     {
-        public Context(DbContextOptions<Context> options):base(options){}
+        public Context(DbContextOptions<Context> options) : base(options) { }
 
-        public DbSet<Usuario> Usuario { get; set; }
-        public DbSet<Perfil> Perfil { get; set; }
+        public DbSet<Cliente> Cliente { get; set; }
 
         //Funções para consultas em banco de dados
-        public List<Usuario> GetUsuario()
+        public List<Cliente> GetCliente()
         {
-            return Usuario.Include(tp => tp.Perfil).OrderBy(r => r.Nome).ToList();
+            return Cliente.OrderBy(r => r.Nome).ToList();
         }
-        public Usuario GetUsuario(int id)
+        public Cliente GetCliente(int id)
         {
-            return Usuario.Where(r => r.Id == id).Include(r => r.Perfil).FirstOrDefault();
-        }
-        public List<Perfil> GetPerfis()
-        {
-            return Perfil.OrderByDescending(r => r.IdPerfil).ToList();
+            return Cliente.Where(r => r.Id == id).FirstOrDefault();
         }
     }
 }
