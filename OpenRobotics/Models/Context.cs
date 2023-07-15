@@ -13,6 +13,10 @@ namespace OpenRobotics.Models
         {
             return Cliente.OrderBy(r => r.Nome).ToList();
         }
+        public List<Cliente> GetClienteDesligado()
+        {
+            return Cliente.Where(r => r.Desligado == 1).OrderBy(r => r.Nome).ToList();
+        }
         public Cliente GetCliente(int id)
         {
             return Cliente.Where(r => r.Id == id).FirstOrDefault();

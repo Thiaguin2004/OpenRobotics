@@ -4,7 +4,7 @@ X Botão de editar em cima do nome
 X Excluir detalhes 
 X Deletar vai virar um ícone 
 X Botão para alterar status desligamento na aba de Usuário 
-Criar seleção por views (para usuários desligados) 
+X Criar seleção por views (para usuários desligados) - Alterado para criação de método em Context.cs para puxar apenas usuários desligados
 X Formatação para Celular, CPF 
 X Dropbox para Perfil 
 X Paginação para Index, para escolher a quantidade de registros que irão aparecer
