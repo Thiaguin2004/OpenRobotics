@@ -7,6 +7,7 @@ namespace OpenRobotics.Models
         public Context(DbContextOptions<Context> options) : base(options) { }
 
         public DbSet<Cliente> Cliente { get; set; }
+        public DbSet<ContasReceber> ContasReceber { get; set; }
 
         //Funções para consultas em banco de dados
         public List<Cliente> GetCliente()
@@ -20,6 +21,10 @@ namespace OpenRobotics.Models
         public Cliente GetCliente(int id)
         {
             return Cliente.Where(r => r.Id == id).FirstOrDefault();
+        }
+        public List<ContasReceber> GetContasReceber()
+        {
+            return ContasReceber.Include(r => r.Cliente).ToList();
         }
     }
 }

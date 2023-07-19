@@ -27,31 +27,45 @@ window.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-//MÁSCARA PARA CPF
-window.addEventListener('DOMContentLoaded', function () {
-    var cpfInput = document.getElementById('cpf');
+//MÁSCARA PARA CNPJ E CPF
+function formatInput() {
+    const inputField = document.getElementById('cnpjcpf');
+    let currentValue = inputField.value.replace(/\D/g, '');
 
-    cpfInput.addEventListener('input', function () {
-        var cpf = cpfInput.value;
+    if (currentValue.length <= 11) {
+        // CPF: Aplicar a máscara (###.###.###-##)
+        currentValue = currentValue.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+    } else {
+        // CNPJ: Aplicar a máscara (##.###.###/####-##)
+        inputField.maxLength = 18;
+        currentValue = currentValue.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$5");
+    }
 
-        // Remove todos os caracteres que não sejam números
-        cpf = cpf.replace(/\D/g, '');
+    inputField.value = currentValue;
+}
 
-        // Bloqueia a entrada de letras
-        cpfInput.value = cpfInput.value.replace(/[^0-9]/g, '');
+//MÁSCARA PARA CEP
+function mascaraCEP(cep) {
+    cep = cep.replace(/\D/g, ''); // Remove caracteres não numéricos
 
-        // Aplica a máscara do CPF
-        if (cpf.length > 3 && cpf.length <= 6) {
-            cpf = cpf.replace(/(\d{3})(\d{1,3})/, '$1.$2');
-        } else if (cpf.length > 6 && cpf.length <= 9) {
-            cpf = cpf.replace(/(\d{3})(\d{3})(\d{1,3})/, '$1.$2.$3');
-        } else if (cpf.length > 9 && cpf.length <= 11) {
-            cpf = cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/, '$1.$2.$3-$4');
-        }
+    if (cep.length <= 5) {
+        return cep;
+    }
 
-        cpfInput.value = cpf;
-    });
-});
+    // Insere o hífen na máscara
+    cep = cep.replace(/^(\d{5})(\d)/, '$1-$2');
+
+    return cep;
+}
+
+function formatarCEP() {
+    var inputCEP = document.getElementById('cep');
+    var cep = inputCEP.value;
+    var cepFormatado = mascaraCEP(cep);
+    inputCEP.value = cepFormatado;
+}
+
+
 
 //CAMPO DE PESQUISA PARA TABELAS
 window.addEventListener('DOMContentLoaded', function () {

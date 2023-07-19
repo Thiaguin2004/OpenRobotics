@@ -27,13 +27,16 @@
                 </div>
             </div>
             <div class="form-group">
-                <label asp-for="TipoPessoa" class="control-label"></label>
-                <input asp-for="TipoPessoa" class="form-control" />
+                <label asp-for="TipoPessoa" class="control-label">Tipo pessoa</label>
+                <select asp-for="TipoPessoa" class="form-control">
+                    <option value="Pessoa física">Pessoa física</option>
+                    <option value="Pessoa jurídica">Pessoa jurídica</option>
+                </select>
                 <span asp-validation-for="TipoPessoa" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="CEP" class="control-label"></label>
-                <input asp-for="CEP" class="form-control" />
+                <input asp-for="CEP" class="form-control" id="cep" oninput="formatarCEP()" maxlength="9"/>
                 <span asp-validation-for="CEP" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -73,7 +76,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="CNPJCPF" class="control-label">CNPJ ou CPF</label>
-                <input asp-for="CNPJCPF" class="form-control" id="cpf" maxlength="14" />
+                <input asp-for="CNPJCPF" class="form-control" id="cnpjcpf" oninput="formatInput()" />
                 <span asp-validation-for="CNPJCPF" class="text-danger"></span>
             </div>
                 
