@@ -3,16 +3,16 @@ using System.ComponentModel.DataAnnotations;
 
 namespace OpenRobotics.Models
 {
-    public class ContasReceber
+    public class ContasPagar
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Required]
-        public int IdContaReceber { get; set; }
+        public int IdContaPagar { get; set; }
         [Required]
         public DateTime Vencimento { get; set; }
         [Required]
-        public int Valor { get; set; }
+        public string Valor { get; set; }
         public DateTime DataEmissao { get; set; }
         public int NumeroDocumento { get; set; }
         public DateTime Competencia { get; set; }

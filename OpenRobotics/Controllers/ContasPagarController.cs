@@ -9,11 +9,11 @@ using OpenRobotics.Models;
 
 namespace OpenRobotics.Controllers
 {
-    public class ContasReceberController : Controller
+    public class ContasPagarController : Controller
     {
         private readonly Context _context; 
 
-        public ContasReceberController(Context context)
+        public ContasPagarController(Context context)
         {
             _context = context;
         }
@@ -21,27 +21,27 @@ namespace OpenRobotics.Controllers
         // GET: ContasReceber
         public async Task<IActionResult> Index()
         {
-              return _context.ContasReceber != null ? 
-                          View(_context.GetContasReceber()) :
-                          Problem("Entity set 'Context.ContasReceber'  is null.");
+              return _context.ContasPagar != null ? 
+                          View(_context.GetContasPagar()) :
+                          Problem("Entity set 'Context.ContasPagar'  is null.");
         }
 
         // GET: ContasReceber/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.ContasReceber == null)
+            if (id == null || _context.ContasPagar == null)
             {
                 return NotFound();
             }
 
-            var contasReceber = await _context.ContasReceber
-                .FirstOrDefaultAsync(m => m.IdContaReceber == id);
-            if (contasReceber == null)
+            var contasPagar = await _context.ContasPagar
+                .FirstOrDefaultAsync(m => m.IdContaPagar == id);
+            if (contasPagar == null)
             {
                 return NotFound();
             }
 
-            return View(contasReceber);
+            return View(contasPagar);
         }
 
         // GET: ContasReceber/Create
@@ -56,38 +56,38 @@ namespace OpenRobotics.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdContaReceber,Vencimento,Valor,DataEmissao,NumeroDocumento,Competencia,FormaPagamento,Categoria,Historico,Tipo,Situacao,IdCliente")] ContasReceber contasReceber)
+        public async Task<IActionResult> Create([Bind("IdContaPagar,Vencimento,Valor,DataEmissao,NumeroDocumento,Competencia,FormaPagamento,Categoria,Historico,Tipo,Situacao,IdCliente")] ContasPagar contasPagar)
         {
-            var cliente = _context.Cliente.Find(contasReceber.IdCliente);
+            var cliente = _context.Cliente.Find(contasPagar.IdCliente);
             
-            contasReceber.Cliente = cliente;
+            contasPagar.Cliente = cliente;
             try
             {
-                _context.Add(contasReceber);
+                _context.Add(contasPagar);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View(contasReceber);
+                return View(contasPagar);
             }
         }
 
         // GET: ContasReceber/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.ContasReceber == null)
+            if (id == null || _context.ContasPagar == null)
             {
                 return NotFound();
             }
 
-            var contasReceber = await _context.ContasReceber.FindAsync(id);
-            if (contasReceber == null)
+            var contasPagar = await _context.ContasPagar.FindAsync(id);
+            if (contasPagar == null)
             {
                 return NotFound();
             }
             ViewBag.Cliente = new SelectList(_context.Cliente, "Id", "Nome");
-            return View(contasReceber);
+            return View(contasPagar);
         }
 
         // POST: ContasReceber/Edit/5
@@ -95,52 +95,51 @@ namespace OpenRobotics.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdContaReceber,Vencimento,Valor,DataEmissao,NumeroDocumento,Competencia,FormaPagamento,Categoria,Historico,Tipo,Situacao,IdCliente")] ContasReceber contasReceber)
+        public async Task<IActionResult> Edit(int id, [Bind("IdContaPagar,Vencimento,Valor,DataEmissao,NumeroDocumento,Competencia,FormaPagamento,Categoria,Historico,Tipo,Situacao,IdCliente")] ContasPagar contasPagar)
         {
-            if (id != contasReceber.IdContaReceber)
+            if (id != contasPagar.IdContaPagar)
             {
                 return NotFound();
             }
-
-            if (ModelState.IsValid)
+            else
             {
                 try
                 {
-                    _context.Update(contasReceber);
+                    _context.Update(contasPagar);
                     await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ContasReceberExists(contasReceber.IdContaReceber))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    return View(contasPagar);
+                    //if (!ContasReceberExists(contasPagar.IdContaPagar))
+                    //{
+                    //    return NotFound();
+                    //}
+                    //else
+                    //{
+                    //    throw;
+                    //}
                 }
-                return RedirectToAction(nameof(Index));
             }
-            return View(contasReceber);
         }
 
         // GET: ContasReceber/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.ContasReceber == null)
+            if (id == null || _context.ContasPagar == null)
             {
                 return NotFound();
             }
 
-            var contasReceber = await _context.ContasReceber
-                .FirstOrDefaultAsync(m => m.IdContaReceber == id);
-            if (contasReceber == null)
+            var contasPagar = await _context.ContasPagar
+                .FirstOrDefaultAsync(m => m.IdContaPagar == id);
+            if (contasPagar == null)
             {
                 return NotFound();
             }
 
-            return View(contasReceber);
+            return View(contasPagar);
         }
 
         // POST: ContasReceber/Delete/5
@@ -148,14 +147,14 @@ namespace OpenRobotics.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.ContasReceber == null)
+            if (_context.ContasPagar == null)
             {
                 return Problem("Entity set 'Context.ContasReceber'  is null.");
             }
-            var contasReceber = await _context.ContasReceber.FindAsync(id);
-            if (contasReceber != null)
+            var contasPagar = await _context.ContasPagar.FindAsync(id);
+            if (contasPagar != null)
             {
-                _context.ContasReceber.Remove(contasReceber);
+                _context.ContasPagar.Remove(contasPagar);
             }
             
             await _context.SaveChangesAsync();
@@ -164,7 +163,7 @@ namespace OpenRobotics.Controllers
 
         private bool ContasReceberExists(int id)
         {
-          return (_context.ContasReceber?.Any(e => e.IdContaReceber == id)).GetValueOrDefault();
+          return (_context.ContasPagar?.Any(e => e.IdContaPagar == id)).GetValueOrDefault();
         }
     }
 }

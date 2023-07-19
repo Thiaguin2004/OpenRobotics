@@ -77,13 +77,13 @@ namespace OpenRobotics.Migrations
                     b.ToTable("Cliente");
                 });
 
-            modelBuilder.Entity("OpenRobotics.Models.ContasReceber", b =>
+            modelBuilder.Entity("OpenRobotics.Models.ContasPagar", b =>
                 {
-                    b.Property<int>("IdContaReceber")
+                    b.Property<int>("IdContaPagar")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdContaReceber"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdContaPagar"));
 
                     b.Property<string>("Categoria")
                         .IsRequired()
@@ -120,20 +120,21 @@ namespace OpenRobotics.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Valor")
-                        .HasColumnType("int");
+                    b.Property<string>("Valor")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Vencimento")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("IdContaReceber");
+                    b.HasKey("IdContaPagar");
 
                     b.HasIndex("ClienteId");
 
-                    b.ToTable("ContasReceber");
+                    b.ToTable("ContasPagar");
                 });
 
-            modelBuilder.Entity("OpenRobotics.Models.ContasReceber", b =>
+            modelBuilder.Entity("OpenRobotics.Models.ContasPagar", b =>
                 {
                     b.HasOne("OpenRobotics.Models.Cliente", "Cliente")
                         .WithMany()

@@ -12,8 +12,8 @@ using OpenRobotics.Models;
 namespace OpenRobotics.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20230717154901_teste")]
-    partial class teste
+    [Migration("20230719115033_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,11 +34,9 @@ namespace OpenRobotics.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Bairro")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CEP")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CNPJCPF")
@@ -49,22 +47,18 @@ namespace OpenRobotics.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Cidade")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Complemento")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Desligado")
                         .HasColumnType("int");
 
                     b.Property<string>("Endereco")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Fantasia")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nome")
@@ -72,7 +66,6 @@ namespace OpenRobotics.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Numero")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TipoPessoa")
@@ -80,7 +73,6 @@ namespace OpenRobotics.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UF")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -88,13 +80,13 @@ namespace OpenRobotics.Migrations
                     b.ToTable("Cliente");
                 });
 
-            modelBuilder.Entity("OpenRobotics.Models.ContasReceber", b =>
+            modelBuilder.Entity("OpenRobotics.Models.ContasPagar", b =>
                 {
-                    b.Property<int>("IdContaReceber")
+                    b.Property<int>("IdContaPagar")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdContaReceber"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdContaPagar"));
 
                     b.Property<string>("Categoria")
                         .IsRequired()
@@ -137,14 +129,14 @@ namespace OpenRobotics.Migrations
                     b.Property<DateTime>("Vencimento")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("IdContaReceber");
+                    b.HasKey("IdContaPagar");
 
                     b.HasIndex("ClienteId");
 
-                    b.ToTable("ContasReceber");
+                    b.ToTable("ContasPagar");
                 });
 
-            modelBuilder.Entity("OpenRobotics.Models.ContasReceber", b =>
+            modelBuilder.Entity("OpenRobotics.Models.ContasPagar", b =>
                 {
                     b.HasOne("OpenRobotics.Models.Cliente", "Cliente")
                         .WithMany()

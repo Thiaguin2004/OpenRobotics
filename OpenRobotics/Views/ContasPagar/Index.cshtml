@@ -1,4 +1,4 @@
-﻿@model IEnumerable<OpenRobotics.Models.ContasReceber>
+﻿@model IEnumerable<OpenRobotics.Models.ContasPagar>
 
 @{
     ViewData["Title"] = "Index";
@@ -52,7 +52,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.IdContaReceber">
+                    <a asp-action="Edit" asp-route-id="@item.IdContaPagar">
                     @Html.DisplayFor(modelItem => item.Cliente.Nome)
                 </a>
             </td>
@@ -87,7 +87,7 @@
                 @Html.DisplayFor(modelItem => item.Situacao)
             </td>
             <td>
-                <a asp-action="Delete" class="btn btn-danger btn-sm" asp-route-id="@item.IdContaReceber"><i class="fa-solid fa-trash"></i></a>
+                    <a asp-action="Delete" class="btn btn-danger btn-sm" asp-route-id="@item.IdContaPagar"><i class="fa-solid fa-trash"></i></a>
             </td>
         </tr>
 }

@@ -65,7 +65,19 @@ function formatarCEP() {
     inputCEP.value = cepFormatado;
 }
 
+//MÁSCARA PARA DINHEIRO BRASILEIRO
+const inputMoney = document.getElementById('inputMoney');
 
+inputMoney.addEventListener('input', formatCurrency);
+
+function formatCurrency() {
+    const value = inputMoney.value.replace(/\D/g, '');
+    const formattedValue = Number(value) / 100; // Divide por 100 para considerar os centavos
+    inputMoney.value = formattedValue.toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+    });
+}
 
 //CAMPO DE PESQUISA PARA TABELAS
 window.addEventListener('DOMContentLoaded', function () {
