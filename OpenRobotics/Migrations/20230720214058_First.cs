@@ -6,11 +6,24 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace OpenRobotics.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class First : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Categoria",
+                columns: table => new
+                {
+                    IdCategoria = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Descricao = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categoria", x => x.IdCategoria);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Cliente",
                 columns: table => new
@@ -43,28 +56,37 @@ namespace OpenRobotics.Migrations
                     IdContaPagar = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Vencimento = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Valor = table.Column<int>(type: "int", nullable: false),
+                    Valor = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DataEmissao = table.Column<DateTime>(type: "datetime2", nullable: false),
                     NumeroDocumento = table.Column<int>(type: "int", nullable: false),
                     Competencia = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FormaPagamento = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Categoria = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Historico = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Tipo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Situacao = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IdCliente = table.Column<int>(type: "int", nullable: false),
-                    ClienteId = table.Column<int>(type: "int", nullable: false)
+                    ClienteId = table.Column<int>(type: "int", nullable: true),
+                    IdCategoria = table.Column<int>(type: "int", nullable: false),
+                    CategoriaIdCategoria = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ContasPagar", x => x.IdContaPagar);
                     table.ForeignKey(
+                        name: "FK_ContasPagar_Categoria_CategoriaIdCategoria",
+                        column: x => x.CategoriaIdCategoria,
+                        principalTable: "Categoria",
+                        principalColumn: "IdCategoria");
+                    table.ForeignKey(
                         name: "FK_ContasPagar_Cliente_ClienteId",
                         column: x => x.ClienteId,
                         principalTable: "Cliente",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ContasPagar_CategoriaIdCategoria",
+                table: "ContasPagar",
+                column: "CategoriaIdCategoria");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ContasPagar_ClienteId",
@@ -77,6 +99,9 @@ namespace OpenRobotics.Migrations
         {
             migrationBuilder.DropTable(
                 name: "ContasPagar");
+
+            migrationBuilder.DropTable(
+                name: "Categoria");
 
             migrationBuilder.DropTable(
                 name: "Cliente");

@@ -4,8 +4,21 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Lista de contas a receber</h1>
-
+<h1>Lista de contas a pagar</h1>
+<form id="filterForm" method="get" asp-action="Index">
+    <div class="form-group">
+        <div class="row">
+            <label for="dateRange">Intervalo de datas:</label>
+            <div class="col-md-3">
+                <input type="text" name="dateRange" id="dateRangeInput" class="form-control">
+            </div>
+            <div class="col-md-1">
+                <a id="filterLink" class="btn btn-outline-primary">Filtrar</a>
+            </div>
+        </div>
+    </div>
+</form>
+<br />
 <p>
     <a asp-action="Create" class="btn btn-outline-primary">Criar novo</a>
 </p>
@@ -13,7 +26,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Cliente.Nome)
+                Nome do cliente
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Vencimento)
@@ -22,13 +35,7 @@
                 @Html.DisplayNameFor(model => model.Valor)
             </th>
             <th>
-                Data de emissão
-            </th>
-            <th>
                 Número do documento
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Competencia)
             </th>
             <th>
                 Forma de pagamento
@@ -37,60 +44,43 @@
                 @Html.DisplayNameFor(model => model.Categoria)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Historico)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Tipo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Situacao)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
                     <a asp-action="Edit" asp-route-id="@item.IdContaPagar">
-                    @Html.DisplayFor(modelItem => item.Cliente.Nome)
-                </a>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Vencimento)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Valor)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataEmissao)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NumeroDocumento)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Competencia)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FormaPagamento)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Categoria)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Historico)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Tipo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Situacao)
-            </td>
-            <td>
+                        @Html.DisplayFor(modelItem => item.Cliente.Nome)
+                    </a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Vencimento)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Valor)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumeroDocumento)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FormaPagamento)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Categoria.Descricao)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tipo)
+                </td>
+                <td>
                     <a asp-action="Delete" class="btn btn-danger btn-sm" asp-route-id="@item.IdContaPagar"><i class="fa-solid fa-trash"></i></a>
-            </td>
-        </tr>
-}
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
 @section Scripts{
@@ -100,6 +90,106 @@
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
                 }
+            });
+        });
+        $(function () {
+            $('#dateRange').daterangepicker();
+        });
+
+
+        $(document).ready(function () {
+            var selectedStartDate = moment().startOf('day').format('DD/MM/YYYY');
+            var selectedEndDate = moment().endOf('day').format('DD/MM/YYYY');
+
+            // Crie o DateRangePicker
+            var dateRangePicker = $('#dateRangeInput').daterangepicker({
+                locale: {
+                    format: 'DD/MM/YYYY',
+                    separator: '-',
+                    applyLabel: 'Aplicar',
+                    cancelLabel: 'Cancelar',
+                    fromLabel: 'De',
+                    toLabel: 'Até',
+                    customRangeLabel: 'Período Personalizado',
+                    daysOfWeek: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+                    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                    firstDay: 0
+                },
+                opens: 'left', // ou 'right' dependendo da posição desejada do calendário
+                linkedCalendars: false, // Impede que os calendários sejam vinculados (apenas um botão de data predefinida)
+                startDate: selectedStartDate,
+                endDate: selectedEndDate
+            });
+
+            // Variável para controlar se os botões personalizados já foram adicionados
+            var customButtonsAdded = false;
+
+            // Função para adicionar os botões dentro do calendário da esquerda
+            function addCustomButtons() {
+                if (!customButtonsAdded) {
+                    var customButtonsContainer = $('<div class="custom-buttons-container"></div>');
+
+                    // Botão para selecionar a semana atual
+                    var weekButton = $('<button class="custom-date-button">Semana Atual</button>');
+                    weekButton.on('click', function () {
+                        selectedStartDate = moment().startOf('week').format('DD/MM/YYYY');
+                        selectedEndDate = moment().endOf('week').format('DD/MM/YYYY');
+                        dateRangePicker.data('daterangepicker').setStartDate(selectedStartDate);
+                        dateRangePicker.data('daterangepicker').setEndDate(selectedEndDate);
+                        dateRangePicker.data('daterangepicker').hide();
+                    });
+                    customButtonsContainer.append(weekButton);
+
+                    // Botão para selecionar o mês atual
+                    var monthButton = $('<button class="custom-date-button">Mês Atual</button>');
+                    monthButton.on('click', function () {
+                        selectedStartDate = moment().startOf('month').format('DD/MM/YYYY');
+                        selectedEndDate = moment().endOf('month').format('DD/MM/YYYY');
+                        dateRangePicker.data('daterangepicker').setStartDate(selectedStartDate);
+                        dateRangePicker.data('daterangepicker').setEndDate(selectedEndDate);
+                        dateRangePicker.data('daterangepicker').hide();
+                    });
+                    customButtonsContainer.append(monthButton);
+
+                    // Botão para selecionar o ano atual
+                    var yearButton = $('<button class="custom-date-button">Ano Atual</button>');
+                    yearButton.on('click', function () {
+                        selectedStartDate = moment().startOf('year').format('DD/MM/YYYY');
+                        selectedEndDate = moment().endOf('year').format('DD/MM/YYYY');
+                        dateRangePicker.data('daterangepicker').setStartDate(selectedStartDate);
+                        dateRangePicker.data('daterangepicker').setEndDate(selectedEndDate);
+                        dateRangePicker.data('daterangepicker').hide();
+                    });
+                    customButtonsContainer.append(yearButton);
+
+                    // Adicione os botões personalizados ao calendário da esquerda
+                    $('.drp-calendar.left').append(customButtonsContainer);
+
+                    // Defina a variável customButtonsAdded como true para evitar duplicação
+                    customButtonsAdded = true;
+                }
+            }
+
+            // Chame a função após o DateRangePicker ser renderizado
+            $('#dateRangeInput').on('show.daterangepicker', function () {
+                addCustomButtons();
+            });
+
+            // Manipula o clique no link "Filtrar"
+            $('#filterLink').click(function (e) {
+                e.preventDefault();
+
+                // Obtém o intervalo de datas selecionado pelo usuário
+                var selectedDateRange = $('#dateRangeInput').val();
+
+                // Define a URL da ação 'Index' com o parâmetro 'dateRange' na query string
+                var url = "@Url.Action("Index")" + "?dateRange=" + selectedDateRange;
+
+                // Altera o atributo 'action' do formulário para a URL com o intervalo de datas
+                $('#filterForm').attr('action', url);
+
+                // Submete o formulário com o intervalo de datas filtrado
+                $('#filterForm').submit();
             });
         });
     </script>

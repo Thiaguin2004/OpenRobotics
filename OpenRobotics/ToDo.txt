@@ -14,3 +14,14 @@ X Criar novo vai virar um ícone
 X Tamanhos de textbox
 X Alterar nome da tabela de Usuários para Clientes
 X Fazer aparecer em GRID de Clientes apenas Nome e Nome Fantasia
+X Filtro de mês precisa ser evidente (botão calendário)
+Anual, Mensal, Semanal
+Dependendo da forma de filtro, mudar cor do botão
+X Retirar competencia, retirar emissão, retirar histórico
+X Criar tabela de categoria (IPTU, FUNCIONARIOS)
+X Consumir tabela de categoria em contas a pagar
+X Tirar campo Situacao do banco
+-----------------------------------------------------------------------------------------------------------
+NECESSÁRIO FAZER TELA E REGRAS DE LOGIN
+Criar tabela de parâmetros do usuário
+Salvar opção atual de filtro de contas a pagar na tabela de parâmetros do usuário

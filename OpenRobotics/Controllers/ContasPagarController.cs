@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -19,11 +20,22 @@ namespace OpenRobotics.Controllers
         }
 
         // GET: ContasReceber
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string dateRange)
         {
-              return _context.ContasPagar != null ? 
+            if(dateRange != null)
+            {
+                _context.GetParametros();
+                var dateStrings = dateRange.Split("-");
+                var startDate = DateTime.Parse(dateStrings[0]);
+                var endDate = DateTime.Parse(dateStrings[1]);
+                return View(_context.GetContasPagar(startDate, endDate));
+            }
+            else
+            {
+                return _context.ContasPagar != null ?
                           View(_context.GetContasPagar()) :
                           Problem("Entity set 'Context.ContasPagar'  is null.");
+            }
         }
 
         // GET: ContasReceber/Details/5
@@ -48,6 +60,7 @@ namespace OpenRobotics.Controllers
         public IActionResult Create()
         {
             ViewBag.Cliente = new SelectList(_context.Cliente, "Id", "Nome");
+            ViewBag.Categoria = new SelectList(_context.Categoria, "IdCategoria", "Descricao");
             return View();
         }
 
@@ -56,11 +69,13 @@ namespace OpenRobotics.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdContaPagar,Vencimento,Valor,DataEmissao,NumeroDocumento,Competencia,FormaPagamento,Categoria,Historico,Tipo,Situacao,IdCliente")] ContasPagar contasPagar)
+        public async Task<IActionResult> Create([Bind("IdContaPagar,Vencimento,Valor,DataEmissao,NumeroDocumento,Competencia,FormaPagamento,Categoria,Historico,Tipo,Situacao,IdCliente,IdCategoria")] ContasPagar contasPagar)
         {
             var cliente = _context.Cliente.Find(contasPagar.IdCliente);
-            
+            var categoria = _context.Categoria.Find(contasPagar.IdCategoria);
+
             contasPagar.Cliente = cliente;
+            contasPagar.Categoria = categoria;
             try
             {
                 _context.Add(contasPagar);
@@ -87,6 +102,7 @@ namespace OpenRobotics.Controllers
                 return NotFound();
             }
             ViewBag.Cliente = new SelectList(_context.Cliente, "Id", "Nome");
+            ViewBag.Categoria = new SelectList(_context.Categoria, "IdCategoria", "Descricao");
             return View(contasPagar);
         }
 
@@ -95,7 +111,7 @@ namespace OpenRobotics.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdContaPagar,Vencimento,Valor,DataEmissao,NumeroDocumento,Competencia,FormaPagamento,Categoria,Historico,Tipo,Situacao,IdCliente")] ContasPagar contasPagar)
+        public async Task<IActionResult> Edit(int id, [Bind("IdContaPagar,Vencimento,Valor,DataEmissao,NumeroDocumento,Competencia,FormaPagamento,Categoria,Historico,Tipo,Situacao,IdCliente,IdCategoria")] ContasPagar contasPagar)
         {
             if (id != contasPagar.IdContaPagar)
             {
@@ -132,8 +148,7 @@ namespace OpenRobotics.Controllers
                 return NotFound();
             }
 
-            var contasPagar = await _context.ContasPagar
-                .FirstOrDefaultAsync(m => m.IdContaPagar == id);
+            var contasPagar = _context.GetContasPagar(id);
             if (contasPagar == null)
             {
                 return NotFound();
